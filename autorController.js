@@ -1,6 +1,4 @@
-// autorController.js
-
-const db = require('./db'); // Importa la conexión a PostgreSQL
+const db = require('./db');
 
 // ----------------------
 // C - CREATE (Crear Autor)
@@ -14,8 +12,7 @@ exports.crearAutor = async (req, res) => {
         const result = await db.query(sql, [nombre, nacionalidad]);
         res.status(201).json({
             mensaje: 'Autor creado exitosamente',
-            id: result.rows[0].id,
-            autor: { nombre, nacionalidad }
+            id: result.rows[0].id
         });
     } catch (error) {
         console.error("Error al crear autor:", error);
@@ -24,7 +21,7 @@ exports.crearAutor = async (req, res) => {
 };
 
 // ----------------------
-// R - READ (Leer Autores)
+// R - READ (Lista de autores)
 // ----------------------
 exports.obtenerAutores = async (req, res) => {
     const sql = `SELECT id, nombre, nacionalidad, fecha_creacion FROM autor ORDER BY id DESC`;
@@ -39,7 +36,7 @@ exports.obtenerAutores = async (req, res) => {
 };
 
 // ----------------------
-// R - READ (Leer Autor por ID)
+// R - READ (Autor por ID)
 // ----------------------
 exports.obtenerAutorPorId = async (req, res) => {
     const { id } = req.params;
@@ -76,7 +73,7 @@ exports.actualizarAutor = async (req, res) => {
             return res.status(404).json({ mensaje: 'Autor no encontrado para actualizar' });
         }
 
-        res.status(200).json({ mensaje: 'Autor actualizado exitosamente', id: id });
+        res.status(200).json({ mensaje: 'Autor actualizado exitosamente' });
     } catch (error) {
         console.error("Error al actualizar autor:", error);
         res.status(500).json({ mensaje: 'Error interno del servidor al actualizar autor', error: error.message });
@@ -98,7 +95,7 @@ exports.eliminarAutor = async (req, res) => {
             return res.status(404).json({ mensaje: 'Autor no encontrado para eliminar' });
         }
 
-        res.status(200).json({ mensaje: 'Autor eliminado exitosamente', id: id });
+        res.status(200).json({ mensaje: 'Autor eliminado exitosamente' });
     } catch (error) {
         console.error("Error al eliminar autor:", error);
         res.status(500).json({ mensaje: 'Error interno del servidor al eliminar autor', error: error.message });
